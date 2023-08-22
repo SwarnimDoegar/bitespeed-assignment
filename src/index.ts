@@ -1,10 +1,10 @@
 import express, { Express, Request, Response } from 'express';
 import initDB from './db/init'
-import registerRouteHandlers from './server';
+import registerRouteHandlers from './routes';
 
 async function main() {
     const app: Express = express();
-    const port = process.env.PORT;
+    const port = process.env.PORT || 8080;
 
     app.use(express.json());
     initDB();
