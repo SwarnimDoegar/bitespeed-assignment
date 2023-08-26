@@ -1,3 +1,3 @@
-import Contact from './models/Contact'
+import Contact, {LinkPrecedence} from './models/Contact'
 
-export {Contact};
+export {Contact, LinkPrecedence};

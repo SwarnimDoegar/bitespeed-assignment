@@ -33,7 +33,7 @@ class Contact extends Model<ContactAttributes, ContactInput> implements ContactA
 
 Contact.init({
     id: {
-        type: DataTypes.INTEGER.UNSIGNED,
+        type: DataTypes.INTEGER,
         autoIncrement: true,
         primaryKey: true,
     },
@@ -44,7 +44,7 @@ Contact.init({
         type: DataTypes.STRING
     },
     linkedId: {
-        type: DataTypes.INTEGER.UNSIGNED
+        type: DataTypes.INTEGER
     },
     linkPrecedence: {
         type: DataTypes.STRING
@@ -58,7 +58,17 @@ Contact.init({
 
 }, {
     timestamps: true,
-    sequelize: sequelizeConnection
+    sequelize: sequelizeConnection,
+    indexes: [
+        {
+            name: "phoneNumberAndEmailIndex",
+            fields: ["email", "phoneNumber"]
+        },
+        {
+            name: "linkedIdIndex",
+            fields: ["linkedId"]
+        }
+    ]
 })
 
 export default Contact;
