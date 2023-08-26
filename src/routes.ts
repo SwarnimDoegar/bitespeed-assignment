@@ -1,21 +1,15 @@
 import { Express, Request, Response } from 'express';
 import {makeErrorResponse, ErrorResponse} from './types/error'
-
-type ProcessorFunction<B,R> = (body : B, params : any) => R
-
-enum HttpMethod {
-    GET,
-    PUT,
-    POST,
-    DELETE
-}
+import { ProcessorFunction, HttpMethod } from './types/app';
+import { identifyCustomer } from './flow/identify';
 
 async function runProcessor<B,R> (req : Request, res : Response, processor : ProcessorFunction<B,R>){
     try {
         let params = {...req.params, ...req.headers, ...req.query}
-        let pRes = processor(req.body, params);
+        let pRes = await processor(req.body, params);
         res.status(200).send(pRes);
     } catch (err1) {
+        console.log(err1)
         try {
             let err : ErrorResponse = JSON.parse(JSON.stringify(err1));
             res.status(err.code ?? 500).send(err.body ?? "Internal server error");
@@ -50,6 +44,5 @@ function makeHandler (app : Express) {
 
 export default function registerRouteHandlers (app : Express){
     const routeHandler = makeHandler(app);
-    // routeHandler(HttpMethod.GET, "/identify", )
-
+    routeHandler(HttpMethod.GET, "/identify", identifyCustomer)
 }
