@@ -35,16 +35,13 @@ const identifyCustomer: ProcessorFunction<IdentifyRequest, IdentifyResponse> = a
         where: {id: primaryContactId}
     })
     let primaryContact : Contact = mPrimaryContact ?? send500Err("Unable to fetch primary account")
-    console.log("Primary contact", primaryContact)
 
     let allSecondaryContacts = await Contact.findAll({
         where: {linkedId: primaryContactId}
     })
-    console.log("Secondary contacts", allSecondaryContacts.map(c => c.dataValues))
 
     let allRelatedContacts = [primaryContact, ...allSecondaryContacts]
     allRelatedContacts = allRelatedContacts.sort((c1, c2) => c1.linkPrecedence > c2.linkPrecedence ? 1 : -1)
-    console.log("All contacts", allRelatedContacts.map(c => c.dataValues))
 
     let emails = allRelatedContacts.map(c => c.email);
     let phoneNumbers = allRelatedContacts.map(c => c.phoneNumber);
