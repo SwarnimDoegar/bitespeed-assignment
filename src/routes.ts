@@ -44,5 +44,5 @@ function makeHandler (app : Express) {
 
 export default function registerRouteHandlers (app : Express){
     const routeHandler = makeHandler(app);
-    routeHandler(HttpMethod.GET, "/identify", identifyCustomer)
+    routeHandler(HttpMethod.POST, "/identify", identifyCustomer)
 }
