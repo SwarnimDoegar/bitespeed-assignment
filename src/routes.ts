@@ -41,7 +41,7 @@ function makeHandler (app : Express) {
     }
 }
 
-const healthHandler : ProcessorFunction<any, any> = async function (_, res) {res.send("UP")}
+const healthHandler : ProcessorFunction<any, any> = async function (_, res) {return "UP"}
 
 export default function registerRouteHandlers (app : Express){
     const routeHandler = makeHandler(app);
