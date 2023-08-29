@@ -7,8 +7,8 @@ async function main() {
     const port = process.env.PORT || 8080;
 
     app.use(express.json());
-    initDB();
-    registerRouteHandlers(app)
+    await initDB();
+    await registerRouteHandlers(app)
     app.listen(port, () => {
         console.log(`⚡️[server]: Server is running at http://localhost:${port}`);
     });
