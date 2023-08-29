@@ -11,8 +11,9 @@ const dbUrl = process.env.DB_URL as string
 const sequelizeConnection = new Sequelize(dbUrl, {
   dialect: dbDriver,
   storage: "../../bitespeed/db.sqlite",
+  logging: process.env.NODE_ENV === 'development',
   pool: {
-    idle: 10000
+    idle: 10000,
   }
 })
 
